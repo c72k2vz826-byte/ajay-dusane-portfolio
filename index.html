@@ -19,7 +19,51 @@
 .cinema-reveal{opacity:0;transform:translate3d(0,45px,0);transition:opacity .8s ease,transform 1s cubic-bezier(.2,.75,.2,1)}.cinema-reveal.cinema-visible{opacity:1;transform:translate3d(0,0,0)}
 @media(max-width:420px){.sound-label{font-size:8px}.sound-toggle{gap:5px}.awards-section:before{font-size:130px}}
 @media(prefers-reduced-motion:reduce){.cinema-reveal{opacity:1;transform:none;transition:none}.sound-wave{animation:none!important}.work-new-image,.work-new-visual{transition:none}.experience-item:before{transition:none}}
-</style></head><body class="intro-active"><div class="intro-overlay" id="intro" role="status" aria-label="Ajay Dusane portfolio loading"><div class="intro-content"><div class="intro-name">AJAY DUSANE</div><div class="intro-words"><span class="intro-word">BRAND</span><span class="intro-word">GROWTH</span><span class="intro-word">BUSINESS</span></div><div class="intro-track"><div class="intro-progress"></div></div></div></div><div class="cinema-progress" aria-hidden="true"><span id="cinema-progress-fill"></span></div><main><header class="site-header"><div class="logo">AJAY DUSANE<small>BRAND · GROWTH · BUSINESS</small></div><button class="menu" id="menu" aria-label="Open menu" aria-expanded="false" hidden>☰</button><button class="sound-toggle" id="sound-toggle" type="button" aria-label="Turn ambient sound on" aria-pressed="false" title="Ambient sound off"><svg viewBox="0 0 24 24" width="21" height="21" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path class="sound-wave" d="M15 9a5 5 0 0 1 0 6"/><path class="sound-wave" d="M18 6a9 9 0 0 1 0 12"/><path class="sound-slash" d="m16 9 5 6"/></svg><span class="sound-label">SOUND OFF</span></button><nav class="menu-panel" id="menu-panel"><a href="#home">Home</a><a href="#results">Results</a><a href="#connect">Connect</a></nav></header>
+/* Cinema v2 — strong visual direction, not merely entrance effects */
+body{background:#050406}
+main{box-shadow:0 0 100px #000c}
+.results-intro{min-height:76svh;display:flex;flex-direction:column;justify-content:center;padding:145px 7% 110px!important;background:radial-gradient(ellipse at 110% 20%,#4a2a33 0,transparent 65%),#0b0a0d!important;border-bottom:1px solid #ffffff24}
+.results-intro h2{font-size:clamp(60px,13vw,83px)!important;line-height:.88!important;letter-spacing:-.04em!important;max-width:520px}
+.results-intro:before{content:"01 / THE OUTCOMES";position:absolute;top:120px;right:7%;font-size:9px;font-weight:800;letter-spacing:.18em;color:#ffffff72}
+.results .panel-inner{isolation:isolate;background:linear-gradient(140deg,#0d0b10 12%,#24151d 55%,#0b0a0d)!important}
+.results .panel:nth-child(3) .panel-inner{background:linear-gradient(145deg,#0a0d14,#172534 65%,#080b11)!important}
+.results .panel:nth-child(4) .panel-inner{background:linear-gradient(145deg,#14100d,#39251a 62%,#0d0a0a)!important}
+.results .panel-inner:before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0 42px,#ffffff06 43px,#ffffff06 44px),repeating-linear-gradient(90deg,transparent 0 42px,#ffffff06 43px,#ffffff06 44px);mask-image:linear-gradient(transparent,#000 35%,#000 65%,transparent);z-index:0}
+.results .panel-inner:after{content:"";position:absolute;width:380px;height:380px;right:-160px;top:9%;border:1px solid #f7ad663a;border-radius:50%;box-shadow:0 0 0 40px #f7ad6608,0 0 0 90px #f7ad6606;pointer-events:none}
+.results .copy{z-index:2}
+.results .metric{font-size:clamp(135px,33vw,200px)!important;color:#f7ad66!important;letter-spacing:-.065em!important;text-shadow:0 8px 45px #f7ad6640}
+.results .metric-title{font-size:clamp(38px,10vw,60px)!important;max-width:330px}
+.results .result-company{display:inline-flex;align-items:center;gap:10px;font-size:11px;letter-spacing:.2em}
+.results .result-company:before{content:"";display:block;width:22px;height:1px;background:#f7ad66}
+.results .result-secondary{margin-top:35px!important;gap:24px!important}
+.results .result-secondary strong{color:#f7ad66}
+.experience-intro{min-height:90svh!important;background:radial-gradient(ellipse at 65% 75%,#492326 0,transparent 63%),#0b0a0d!important;padding:150px 7% 110px!important}
+.experience-intro h2{font-size:clamp(65px,14vw,88px)!important;line-height:.88!important}
+.experience-intro:before{content:"02 / THE JOURNEY";position:absolute;top:120px;right:7%;font-size:9px;letter-spacing:.18em;color:#ffffff72}
+.experience-item .experience-pin{isolation:isolate}
+.experience-item .experience-pin:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.8;background:linear-gradient(125deg,#0000 28%,#f7ad660b 29%,#0000 32%),repeating-linear-gradient(90deg,#ffffff06 0 1px,transparent 1px 80px);z-index:0}
+.experience-item:nth-child(3n) .experience-pin{background:radial-gradient(ellipse at 90% 20%,#38243c,transparent 67%),#0a0a0e!important}
+.experience-item:nth-child(3n + 1) .experience-pin{background:radial-gradient(ellipse at 15% 75%,#27303b,transparent 68%),#0a0a0e!important}
+.experience-copy{position:relative;z-index:2}
+.experience-copy h3{font-size:clamp(79px,18vw,115px)!important;line-height:.81!important;letter-spacing:-.05em!important}
+.experience-index{display:inline-block;padding:7px 12px;border:1px solid #f7ad6660;background:#f7ad660a;margin-bottom:30px}
+.experience-foot{display:inline-block;border-top:1px solid #f7ad665c;padding-top:16px;color:#f7ad66!important}
+.work-new{background:linear-gradient(180deg,#09090d,#130f16 48%,#09090d)!important}
+.work-new-intro{min-height:60svh;display:flex;flex-direction:column;justify-content:center}
+.work-new-intro h2{font-size:clamp(65px,14vw,90px)!important}
+.work-new-visual{aspect-ratio:16/9!important;border:1px solid #ffffff1c}
+.work-new-visual:after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 65px #0009}
+.work-new-title{font-size:clamp(50px,12vw,76px)!important}
+.awards-section{background:linear-gradient(155deg,#1b121a,#0b0a0d 75%)!important}
+.awards-head h2{font-size:clamp(50px,12vw,77px)!important}
+.awards-year summary>span:first-child{font-size:44px!important}
+.connect-section h2{font-size:clamp(60px,13vw,85px)!important;line-height:.88!important}
+.connect-link-copy strong{font-size:clamp(44px,10vw,62px)!important}
+.tabs{border-radius:12px!important;height:62px!important;background:#0c0b0eea!important;border:1px solid #f7ad6640!important}
+.tabs button.selected{background:#f7ad6615}
+@media(max-height:690px){.results .metric{font-size:clamp(105px,26vw,155px)!important}.experience-copy h3{font-size:clamp(64px,16vw,90px)!important}}
+@media(prefers-reduced-motion:reduce){.results .panel-inner:after{box-shadow:none}}
+</style></head><body class="intro-active"><div class="intro-overlay" id="intro" role="status" aria-label="Ajay Dusane portfolio loading"><div class="intro-content"><div class="intro-name">AJAY DUSANE</div><div class="intro-words"><span class="intro-word">BRAND</span><span class="intro-word">GROWTH</span><span class="intro-word">BUSINESS</span></div><div class="intro-track"><div class="intro-progress"></div></div></div></div><div class="cinema-progress" aria-hidden="true"><span id="cinema-progress-fill"></span></div><main><header class="site-header"><div class="logo">AJAY DUSANE<small>BRAND · GROWTH · BUSINESS</small></div><button class="menu" id="menu" aria-label="Open menu" aria-expanded="false" hidden>☰</button><button class="sound-toggle" id="sound-toggle" type="button" aria-label="Play original background music" aria-pressed="false" title="Ambient sound off"><svg viewBox="0 0 24 24" width="21" height="21" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path class="sound-wave" d="M15 9a5 5 0 0 1 0 6"/><path class="sound-wave" d="M18 6a9 9 0 0 1 0 12"/><path class="sound-slash" d="m16 9 5 6"/></svg><span class="sound-label">MUSIC OFF</span></button><nav class="menu-panel" id="menu-panel"><a href="#home">Home</a><a href="#results">Results</a><a href="#connect">Connect</a></nav></header>
 <section class="story" id="home"><div class="pin">
 <article class="scene scene1 active"><h1><span class="line">People don’t</span><span class="line">buy products.</span><span class="line accent">They buy reasons.</span></h1><p class="sub">Understanding what moves people changes everything.</p></article>
 <article class="scene scene2"><h2><span class="line">Attention</span><span class="line">is easy.</span><span class="line accent">Preference is earned.</span></h2><p class="sub">Building brands people choose, remember and return to.</p></article>
@@ -51,9 +95,13 @@ function paintCinema(){ticking=false;const total=Math.max(1,document.documentEle
 function scheduleCinema(){if(!ticking){ticking=true;requestAnimationFrame(paintCinema)}}addEventListener('scroll',scheduleCinema,{passive:true});addEventListener('resize',scheduleCinema);paintCinema();
 if(!prefersReduced&&'IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('cinema-visible');observer.unobserve(entry.target)}}),{threshold:.12,rootMargin:'0px 0px -30px 0px'});document.querySelectorAll('.results-intro h2,.experience-intro h2,.work-new-intro h2,.awards-head h2,.connect-section h2,.awards-year,.work-case').forEach(el=>{el.classList.add('cinema-reveal');observer.observe(el)})}
 const button=document.getElementById('sound-toggle');let context=null,master=null,voices=[],on=false;
-function makeAmbient(){const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return false;context=new AC();master=context.createGain();master.gain.value=0;master.connect(context.destination);[110,164.81,220,329.63].forEach((hz,i)=>{const osc=context.createOscillator(),gain=context.createGain();osc.type=i%2?'sine':'triangle';osc.frequency.value=hz;gain.gain.value=i===0?.055:.013;osc.connect(gain);gain.connect(master);osc.start();voices.push(osc)});return true}
-button.addEventListener('click',async()=>{try{if(!context&&!makeAmbient())return;await context.resume();on=!on;master.gain.cancelScheduledValues(context.currentTime);master.gain.setTargetAtTime(on?0.35:0,context.currentTime,.45);button.setAttribute('aria-pressed',String(on));button.setAttribute('aria-label',on?'Mute ambient sound':'Turn ambient sound on');button.title=on?'Ambient sound on':'Ambient sound off';button.querySelector('.sound-label').textContent=on?'SOUND ON':'SOUND OFF'}catch(err){button.title='Sound unavailable on this browser'}});
-document.addEventListener('visibilitychange',()=>{if(context&&master){master.gain.setTargetAtTime(document.hidden?0:(on?.35:0),context.currentTime,.25)}});
+function makeAmbient(){const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return false;context=new AC();master=context.createGain();master.gain.value=0;master.connect(context.destination);return true}
+const melody=[0,2,4,7,9,7,4,2,0,-3,0,2,4,2,0,-3],bass=[-12,-8,-5,-7],scale=[0,2,3,5,7,8,10,12,14,15,17,19];let musicTimer=null,beat=0;
+function note(midi,start,duration,volume,shape='sine'){const o=context.createOscillator(),g=context.createGain(),f=context.createBiquadFilter();o.type=shape;o.frequency.setValueAtTime(440*Math.pow(2,(midi-69)/12),start);f.type='lowpass';f.frequency.value=shape==='triangle'?1100:2200;g.gain.setValueAtTime(.0001,start);g.gain.exponentialRampToValueAtTime(Math.max(.0002,volume),start+.045);g.gain.exponentialRampToValueAtTime(.0001,start+duration);o.connect(f);f.connect(g);g.connect(master);o.start(start);o.stop(start+duration+.06)}
+function scheduleBar(){if(!context||!on)return;const t=context.currentTime+.04;const root=48;const base=bass[Math.floor(beat/4)%bass.length];note(root+base,t,1.7,.08,'triangle');if(beat%2===0){note(60+melody[beat%melody.length],t+.08,.72,.048,'sine');note(72+melody[(beat+4)%melody.length],t+.3,1.2,.017,'sine')}if(beat%4===0){[0,3,7].forEach((n,i)=>note(60+base+n,t+i*.035,2.1,.012,'triangle'))}beat++}
+button.addEventListener('click',async()=>{try{if(!context&&!makeAmbient())return;await context.resume();on=!on;master.gain.cancelScheduledValues(context.currentTime);master.gain.setTargetAtTime(on?0.8:0,context.currentTime,.3);if(on){beat=0;scheduleBar();musicTimer=setInterval(scheduleBar,780)}else{clearInterval(musicTimer);musicTimer=null}button.setAttribute('aria-pressed',String(on));button.setAttribute('aria-label',on?'Mute original background music':'Play original background music');button.title=on?'Music on':'Music off';button.querySelector('.sound-label').textContent=on?'MUSIC ON':'MUSIC OFF'}catch(err){button.title='Audio unavailable on this browser'}});
+document.addEventListener('visibilitychange',()=>{if(context&&master)master.gain.setTargetAtTime(document.hidden?0:(on?.8:0),context.currentTime,.2)});
+
 })();
 
 })();</script></body></html>
