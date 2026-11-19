@@ -1,0 +1,44 @@
+name: Refine mobile hero typography and motion
+on:
+  push:
+    paths:
+      - '.github/workflows/mobile-hero-v2.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  refine:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Apply mobile-only hero styling
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          assert '<head>' in s and '</head>' in s and 'class="hero' in s, 'Expected V9 hero structure not found'
+          css = """<style id="mobile-hero-v2">
+          @media(max-width:800px){
+            .hero{min-height:calc(100svh - 82px)!important;min-height:calc(100dvh - 82px)!important;display:flex!important;flex-direction:column!important;justify-content:center!important;position:relative;overflow:hidden}
+            .hero-copy{padding-top:clamp(30px,5vh,64px)!important;padding-bottom:clamp(24px,5vh,64px)!important}
+            .hero h1{font-size:clamp(3.6rem,11.7vw,6.2rem)!important;line-height:.99!important;letter-spacing:-.065em!important;text-wrap:balance}
+            .hero h1,.hero-copy h1{animation:heroRiseV2 950ms cubic-bezier(.18,.7,.2,1) both}
+            .hero-copy p{animation:heroRiseV2 950ms 180ms cubic-bezier(.18,.7,.2,1) both}
+            .hero-copy a{animation:heroRiseV2 950ms 300ms cubic-bezier(.18,.7,.2,1) both}
+          }
+          @keyframes heroRiseV2{from{opacity:0;transform:translate3d(0,24px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+          @media(prefers-reduced-motion:reduce){.hero h1,.hero-copy h1,.hero-copy p,.hero-copy a{animation:none!important}}
+          </style>"""
+          if 'mobile-hero-v2' not in s:
+              s=s.replace('</head>',css+'</head>',1)
+              p.write_text(s,encoding='utf-8')
+          PY
+      - name: Commit updated homepage
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git diff --cached --quiet || (git commit -m "Refine mobile hero scale, balance and entrance motion" && git push)
