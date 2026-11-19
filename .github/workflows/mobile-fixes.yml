@@ -1,0 +1,37 @@
+name: Apply mobile homepage and menu corrections
+on:
+  push:
+    paths:
+      - '.github/workflows/mobile-fixes.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Apply narrowly scoped changes
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          duplicate="if(btn&&nav){btn.addEventListener('click',function(){var open=nav.classList.toggle('open');btn.setAttribute('aria-expanded',String(open));btn.textContent=open?'CLOSE −':'MENU +'});nav.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){nav.classList.remove('open');btn.setAttribute('aria-expanded','false');btn.textContent='MENU +'})})}"
+          if duplicate in s:
+              s=s.replace(duplicate,'/* menu handler already registered in main script */',1)
+          else:
+              raise SystemExit('Expected duplicate mobile menu handler not found; refusing to modify')
+          css='''<style id="mobile-hero-balance-fix">@media(max-width:800px){.hero{justify-content:center!important;min-height:100svh!important;min-height:100dvh!important}.hero-copy{flex:0 0 auto!important;padding:0 6% !important;max-width:100%}.menu{position:relative;z-index:102;min-height:44px;padding:10px 0 10px 16px;touch-action:manipulation}nav.open{display:flex!important;z-index:101}}</style>'''
+          if 'mobile-hero-balance-fix' not in s:
+              s=s.replace('</head>',css+'</head>',1)
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Commit corrected site
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git diff --cached --quiet || (git commit -m "Fix mobile menu double toggle and center hero content" && git push)
