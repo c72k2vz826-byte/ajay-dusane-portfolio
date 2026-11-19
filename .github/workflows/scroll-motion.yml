@@ -1,0 +1,86 @@
+name: Add subtle scroll motion to portfolio
+on:
+  push:
+    paths:
+      - '.github/workflows/scroll-motion.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  motion:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Add progressive scroll enhancement
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          if 'id="portfolio-scroll-motion"' in s:
+              print('Motion enhancement already installed')
+              raise SystemExit(0)
+          assert '</body>' in s, 'Expected closing body missing'
+          enhancement=r"""
+          <style id="portfolio-scroll-motion">
+          @media(prefers-reduced-motion:no-preference){
+            .scroll-reveal-ready{opacity:0;transform:translate3d(0,20px,0);transition:opacity 850ms cubic-bezier(.2,.65,.2,1),transform 850ms cubic-bezier(.2,.65,.2,1)}
+            .scroll-reveal-ready.scroll-in-view{opacity:1;transform:translate3d(0,0,0)}
+            .scroll-parallax-image{will-change:transform;transform:translate3d(0,var(--scroll-shift,0px),0) scale(1.045);transition:transform 180ms linear}
+          }
+          @media(prefers-reduced-motion:reduce){
+            .scroll-reveal-ready{opacity:1!important;transform:none!important}
+            .scroll-parallax-image{transform:none!important}
+          }
+          </style>
+          <script id="portfolio-scroll-motion">
+          (function(){
+            if(!('IntersectionObserver' in window)||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+            function start(){
+              var sections=Array.from(document.querySelectorAll('main section, section'));
+              var reveal=[];
+              sections.forEach(function(section){
+                var nodes=section.querySelectorAll('h2,h3,.section-title,.section-heading,.work-card,.project-card,.campaign-card,.impact-card,.experience-card,.recognition-card,.thinking-card');
+                nodes.forEach(function(node){if(!node.closest('.hero')&&!node.closest('header')&&!node.closest('nav'))reveal.push(node)});
+              });
+              var unique=Array.from(new Set(reveal)).filter(function(node){
+                return node.getBoundingClientRect().height>0&&!node.classList.contains('scroll-reveal-ready')
+              });
+              var observer=new IntersectionObserver(function(entries){
+                entries.forEach(function(entry){if(entry.isIntersecting){entry.target.classList.add('scroll-in-view');observer.unobserve(entry.target)}});
+              },{threshold:0.08,rootMargin:'0px 0px -24px 0px'});
+              unique.forEach(function(el){el.classList.add('scroll-reveal-ready');observer.observe(el)});
+              var images=Array.from(document.querySelectorAll('.work-card img,.project-card img,.campaign-card img,.work-grid img,.projects-grid img')).filter(function(el){return el.getBoundingClientRect().height>0}).slice(0,40);
+              images.forEach(function(img){img.classList.add('scroll-parallax-image')});
+              var ticking=false;
+              function update(){
+                ticking=false;
+                var center=window.innerHeight/2;
+                images.forEach(function(img){
+                  var r=img.getBoundingClientRect();
+                  if(r.bottom<0||r.top>window.innerHeight)return;
+                  var relative=(r.top+r.height/2-center)/(window.innerHeight/2+r.height/2);
+                  img.style.setProperty('--scroll-shift',Math.max(-12,Math.min(12,-relative*12)).toFixed(1)+'px');
+                });
+              }
+              function onScroll(){if(!ticking){ticking=true;requestAnimationFrame(update)}}
+              window.addEventListener('scroll',onScroll,{passive:true});
+              window.addEventListener('resize',onScroll,{passive:true});
+              update();
+            }
+            if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});
+            else start();
+          })();
+          </script>
+          """
+          s=s.replace('</body>',enhancement+'</body>',1)
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Commit site enhancement
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git diff --cached --quiet || (git commit -m "Add subtle scroll reveals and restrained campaign image parallax" && git push)
